@@ -14,3 +14,12 @@ func (r *RecipeRepository) Create(recipe *models.Recipe) error {
 	//err := r.C.Insert(&user)
 	return err
 }
+func (r *RecipeRepository) GetAll() []models.Recipe {
+	var recipes []models.Recipe
+	iter := r.C.Find(nil).Iter()
+	result := models.Recipe{}
+	for iter.Next(&result) {
+		recipes = append(recipes, result)
+	}
+	return recipes
+}

@@ -42,4 +42,12 @@ type (
 		Comment  string `json:"comment"`
 		IsEdited bool   `json:"isEdited"`
 	}
+	Imagee struct {
+		RecipeID        []bson.ObjectId `bson:"_id,omitempty" json:"recipeID"`
+		RecipeName      []string        `json:"recipeName"`
+		RecipeDetail    []string        `json:"recipeDetail"`
+		ImageName       []string        `json:"imageName"`
+		CurrentUsername []string        `json:"currentUsername"`
+		Comments        [50][]Comment   `json:"comments"`
+	}
 )

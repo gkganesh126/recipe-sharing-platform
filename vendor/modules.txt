@@ -1,18 +1,6 @@
-# github.com/boltdb/bolt v1.3.1
-## explicit
-github.com/boltdb/bolt
-# github.com/eahydra/gouuid v0.0.0-20130615145914-0bb88536d776
-## explicit
-github.com/eahydra/gouuid
 # github.com/gorilla/mux v1.8.1
 ## explicit; go 1.20
 github.com/gorilla/mux
-# github.com/gorilla/securecookie v1.1.2
-## explicit; go 1.20
-github.com/gorilla/securecookie
-# github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
-## explicit
-github.com/nfnt/resize
 # go.uber.org/multierr v1.10.0
 ## explicit; go 1.19
 go.uber.org/multierr
@@ -27,9 +15,6 @@ go.uber.org/zap/internal/exit
 go.uber.org/zap/internal/pool
 go.uber.org/zap/internal/stacktrace
 go.uber.org/zap/zapcore
-# golang.org/x/sys v0.18.0
-## explicit; go 1.18
-golang.org/x/sys/unix
 # gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c
 ## explicit; go 1.11
 # gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22

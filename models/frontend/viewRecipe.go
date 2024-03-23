@@ -14,32 +14,16 @@ const ViewRecipe = `
 		        element.attachEvent('on'+event, handler);
 		    };
 		}
+		/*
 		else {
 		    observe = function (element, event, handler) {
 		        element.addEventListener(event, handler, false);
 		    };
-		}
+		} */
 		function init () {
 		    var text = document.getElementById('text');
 			var x = document.getElementsByTagName("commentArea");
 		console.log(x);
-		    function resize () {
-		        text.style.height = '28px';
-		        text.style.height = text.scrollHeight+'px';
-		    }
-		    /* 0-timeout to get the already changed text */
-		    function delayedResize () {
-		        window.setTimeout(resize, 0);
-		    }
-		    observe(text, 'change',  resize);
-		    observe(text, 'cut',     delayedResize);
-		    observe(text, 'paste',   delayedResize);
-		    observe(text, 'drop',    delayedResize);
-		    observe(text, 'keydown', delayedResize);
-		
-		    text.focus();
-		    text.select();
-		    resize();
 		}
 		</script>
 		<script src="/static/js/test6.js"></script>
@@ -49,15 +33,15 @@ const ViewRecipe = `
 				<h1 id="efi"><br>Recipe sharing platform</h1>
 		</div>
 		
-		<p style="margin-left:10%; margin-top:20px; height: 6px;">Hello <b id="user">{{.Username}}</b></p>
+		<p style="margin-left:10%; margin-top:20px; height: 6px;">Hello <b id="user">User</b></p>
 		<b><p id="currentImage" name="currentImage">
 			
 		</p></b>
 		
 		<div class="galleriaContainer">
 	        <div class="galleria">
-			{{range .Imm}}
-			<a href="/static/server/scaledloc/{{.}}" download="{{.}}"><img src="/static/server/scaledloc/{{.}}" /></a>
+			{{range .ImageName}}
+			<a href="/static/server/pictures/{{.}}" download="{{.}}"><img src="/static/server/pictures/{{.}}" /></a>
 	         {{end}}   
 	            
 	        </div>
@@ -146,7 +130,7 @@ const ViewRecipe = `
 	.rhs { width:30%; height:480px  ; margin-left : 60% ;margin-top : 37px ;  
 	}
 	body {
-				background-image: url("static/css/bg.jpg");
+				background-image: url("/static/css/bg.jpg");
 				background-repeat: repeat;
 			    background-color: #cccccc;
 				}

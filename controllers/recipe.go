@@ -5,11 +5,13 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"text/template"
 	"time"
 
 	"github.com/gkganesh126/recipe-sharing-platform/common"
 	db "github.com/gkganesh126/recipe-sharing-platform/db-ops"
 	"github.com/gkganesh126/recipe-sharing-platform/models"
+	"github.com/gkganesh126/recipe-sharing-platform/models/frontend"
 	"go.uber.org/zap"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -63,6 +65,37 @@ func UploadRecipe(response http.ResponseWriter, request *http.Request) {
 
 func ViewRecipe(response http.ResponseWriter, request *http.Request) {
 	zap.S().Info("At ViewRecipe")
+
+	imagee := models.Imagee{}
+	t := template.New("Imagee template")
+	t, err := t.Parse(frontend.ViewRecipe)
+	if err != nil {
+		common.DisplayAppError(response, "User", err, "ViewRecipe failed", http.StatusInternalServerError)
+		return
+	}
+	context := NewContext()
+	defer context.Close()
+	c := context.RecipeSharingPlatformDbCollection("recipes")
+	// Create User
+	repo := &db.RecipeRepository{C: c}
+
+	vs := repo.GetAll()
+	zap.S().Info("vs: ", vs)
+	for i, v := range vs {
+		imagee.RecipeID = append(imagee.RecipeID, v.RecipeID)
+		imagee.RecipeName = append(imagee.RecipeName, v.RecipeName)
+		imagee.RecipeDetail = append(imagee.RecipeDetail, v.RecipeDetail)
+		imagee.ImageName = append(imagee.ImageName, v.ImageName)
+		for _, comment := range v.Comments {
+			imagee.Comments[i] = append(imagee.Comments[i], comment)
+		}
+	}
+	err = t.Execute(response, imagee)
+	if err != nil {
+		common.DisplayAppError(response, "User", err, "ViewRecipe failed", http.StatusInternalServerError)
+		return
+	}
+
 }
 
 func WriteCmntToDb(response http.ResponseWriter, request *http.Request) {

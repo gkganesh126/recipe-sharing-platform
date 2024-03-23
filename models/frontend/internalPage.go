@@ -3,10 +3,12 @@ package frontend
 const InternalPage = `
 <html>
 	<head>
+	<title>Recipe Sharing Platform</title>
 		<style>
 		body {
 			margin:0px ;
-			background-image: url("/static/css/bg.jpg");	
+			background-image: url("static/css/bg.jpg");	
+			background-repeat: repeat;
 		  	}
 			#efi {
 				color : white ;
@@ -16,6 +18,7 @@ const InternalPage = `
 			margin-left : 0px ;
 			margin-right : 0px ;
 			height : 90px ;
+			font-size: 30px;
 			background-color : black ;
 			opacity : 0.95;
 			}
@@ -23,15 +26,10 @@ const InternalPage = `
 	</head>
 	<body>
 			<div class="toptag">
-				<img src="/static/js/efi logo.png" style="float:left;" />
-				<h1 id="efi"><br>Customer Service Portal</h1>
+				<h1 id="efi"><br>Recipe sharing platform</h1>
 			</div>
 	<br>
 			<div class="mid">
-				<h1>%s</h1><br>
-				<hr>
-				<small><b>User:</b> %s</small><br><br>
-				<hr>
 				<p>What would you like to do?</p><br>
 				<a href="/app/">Upload a Picture</a><br><br>
 				<a href="/viewimage/">View Pictures</a><br><br>

@@ -455,50 +455,6 @@ func ReadCmntFromDb(response http.ResponseWriter, request *http.Request) {
 	//	checkError(err)
 
 }
-func RegisterInDb(response http.ResponseWriter, request *http.Request) {
-	db, err := bolt.Open("userDetails.db", 0644, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-
-	name := request.FormValue("name")
-	pass := request.FormValue("password")
-	/*
-		u := gouuid.NewUUID()
-		uuidStr := fmt.Sprintf("%x-%x-%x-%x-%x", u[0:4], u[4:6], u[6:8], u[8:10], u[10:])
-		fmt.Println(uuidStr)
-	*/
-	check := Checklogin(name, pass)
-	if check == 0 {
-		keyR := []byte(name)
-		valueR := []byte(pass)
-
-		// store some data
-		err = db.Update(func(tx *bolt.Tx) error {
-			bucket, err := tx.CreateBucketIfNotExists(world)
-			if err != nil {
-				return err
-			}
-
-			err = bucket.Put(keyR, valueR)
-			if err != nil {
-				return err
-			}
-			return nil
-		})
-
-		if err != nil {
-			log.Fatal(err)
-		}
-		//	j = j + 1
-		//fmt.Fprintln(response, "Successfully Registered")
-		http.Redirect(response, request, "/internalnew", 302)
-	} else {
-		fmt.Fprintln(response, "username already exists, Try a new one")
-	}
-
-}
 
 func Uploadimage(response http.ResponseWriter, request *http.Request) {
 	fmt.Println("at upload image")

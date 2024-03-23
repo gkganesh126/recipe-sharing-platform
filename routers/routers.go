@@ -21,11 +21,11 @@ func SetRecipeSharingRouters(router *mux.Router) *mux.Router {
 	router.HandleFunc("/register/", func(response http.ResponseWriter, request *http.Request) {
 		fmt.Fprintf(response, "%s", frontend.RegisterPage)
 	})
-	router.HandleFunc("/newlogin", controllers.RegisterInDb).Methods("POST")
-	router.HandleFunc("/login", controllers.LoginHandler).Methods("POST")
-	router.HandleFunc("/logout", controllers.LogoutHandler).Methods("POST")
+	router.HandleFunc("/newlogin", controllers.RegisterInDb)
+	router.HandleFunc("/login", controllers.LoginHandler)
+	router.HandleFunc("/logout", controllers.LogoutHandler)
 
-	router.HandleFunc("/upload/", controllers.HelloServer)
+	/*router.HandleFunc("/upload/", controllers.HelloServer)
 
 	router.HandleFunc("/app/", controllers.Uploadimage)
 
@@ -35,6 +35,7 @@ func SetRecipeSharingRouters(router *mux.Router) *mux.Router {
 	router.HandleFunc("/viewimage/", controllers.Viewimage)
 	router.HandleFunc("/writecmnttodb/", controllers.WriteCmntToDb)
 	router.HandleFunc("/readcmntfromdb/", controllers.ReadCmntFromDb)
+	*/
 
 	return router
 }

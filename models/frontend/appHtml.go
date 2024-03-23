@@ -32,7 +32,8 @@ const AppHtml = `
 					  background-color: #3498db;
 					  }
 					body {
-						background-image : url("/static/css/bg.jpg") ;
+						background-image : url("static/css/bg.jpg") ;
+						background-repeat: repeat;
 						margin-top :195 px ;
 						text-align : center ;
 						}

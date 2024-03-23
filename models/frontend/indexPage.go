@@ -3,11 +3,12 @@ package frontend
 const IndexPage = `
 <html >
 	<head>
-		<title>Customer Service Portal</title>
+	<title>Recipe Sharing Platform</title>
 		<style>
 		body {
 			margin:0px ;
-			background-image: url("/static/css/bg.jpg");
+			background-image: url("static/css/bg.jpg");
+			background-repeat: repeat;
 		    background-color: #cccccc;
 			text-align: center;
 			}
@@ -19,6 +20,7 @@ const IndexPage = `
 			margin-left : 0px ;
 			margin-right : 0px ;
 			height : 90px ;
+			font-size: 30px;
 			background-color : black ;
 			opacity : 0.95;
 			text-align:left;
@@ -34,7 +36,7 @@ const IndexPage = `
 		        <div class="content_item" align='middle'><br><br>
 				    <h1>Welcome To Recipe sharing platform</h1> 
 						<br><br>
-					<h1>%s</h1><br>
+					
 						<form method="post" action="/login">
 						    <label for="name">User name</label>
 						    <input type="text" id="name" name="name">

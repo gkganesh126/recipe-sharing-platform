@@ -147,7 +147,8 @@ const Templ = `
 	.rhs { width:30%; height:480px  ; margin-left : 60% ;margin-top : 37px ;  
 	}
 	body {
-				background-image: url("/static/css/bg.jpg");
+				background-image: url("static/css/bg.jpg");
+				background-repeat: repeat;
 			    background-color: #cccccc;
 				}
 	#efi {

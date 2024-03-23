@@ -3,7 +3,7 @@ package frontend
 const RegisterPage = `
 <html >
 	<head>
-		<title>Customer Service Portal</title>
+	<title>Recipe Sharing Platform</title>
 		<script>
 		function pwdcheck() {
 			var pwd = document.getElementsByTagName("input");
@@ -19,18 +19,22 @@ const RegisterPage = `
 					form.setAttribute("action","/register/");
 			}else {
 					alert('Valid Password');
+					form.setAttribute("action","/newlogin/");
 			}
 		}
 		</script>
 		<style>
 			body {
 				margin:0px 200px;
-				background-image: url("/static/css/bg.jpg");
+				background-image: url("static/css/bg.jpg");
+				background-repeat: repeat;
 			    background-color: #cccccc;
 				}
 			#efi {
 				color : white ;
+				
 				}
+				  
 			.toptag {
 				margin-top : 0px ;
 				margin-left : 0px ;
@@ -38,6 +42,7 @@ const RegisterPage = `
 				height : 90px ;
 				background-color : black ;
 				opacity : 0.95;
+				font-size: 30px;
 				}
 		</style>
 	</head>

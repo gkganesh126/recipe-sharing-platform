@@ -2,25 +2,66 @@ package controllers
 
 import (
 	//_ "controller"
+
 	"fmt"
 	"log"
 	"net/http"
 
+	"github.com/gkganesh126/recipe-sharing-platform/common"
+	db "github.com/gkganesh126/recipe-sharing-platform/db-ops"
 	"github.com/gkganesh126/recipe-sharing-platform/models/frontend"
-
-	"github.com/boltdb/bolt"
+	"github.com/gkganesh126/recipe-sharing-platform/sessions"
+	"go.uber.org/zap"
+	"gopkg.in/mgo.v2/bson"
 )
+
+func RegisterInDb(response http.ResponseWriter, request *http.Request) {
+
+	zap.S().Info("At CreateUser")
+
+	name := request.FormValue("name")
+	pass := request.FormValue("password")
+	log.Println("at RegisterInDb: ", name, pass)
+
+	context := NewContext()
+	defer context.Close()
+	c := context.RecipeSharingPlatformDbCollection("users")
+	// Create User
+	repo := &db.UserRepository{C: c}
+
+	var user UserResource
+	user.Data.UserID = bson.NewObjectId()
+	user.Data.Username = name
+	user.Data.Password = pass
+	err := repo.Create(&user.Data)
+	if err != nil {
+		common.DisplayAppError(response, user.Data.Username, err, "CreateUser write db failed", http.StatusInternalServerError)
+		return
+	}
+	// Create response db
+
+	err = sessions.SetSession(user.Data.Username, &response)
+	if err != nil {
+		common.DisplayAppError(response, user.Data.UserID.String(), err, "CreateUser SetSession failed", http.StatusInternalServerError)
+		return
+	}
+
+	zap.S().Infof("username: %s successfully created", user.Data.Username)
+	http.Redirect(response, request, "/internalnew", 302)
+}
 
 // login handler
 
 func LoginHandler(response http.ResponseWriter, request *http.Request) {
 	name := request.FormValue("name")
 	pass := request.FormValue("password")
+	log.Println("at LoginHandler: ", name, pass)
 	redirectTarget := "/"
-	chk := Checklogin(name, pass)
-	if chk == 1 {
+	_, err := sessions.IsValidSession(request)
+	log.Println("IsValidSession error:", err)
+	if err == nil {
 		// .. check credentials ..
-		SetSession(name, response)
+		sessions.SetSession(name, &response)
 		redirectTarget = "/internal"
 		http.Redirect(response, request, redirectTarget, 302)
 	} else {
@@ -29,44 +70,10 @@ func LoginHandler(response http.ResponseWriter, request *http.Request) {
 	}
 }
 
-func Checklogin(name, pass string) int {
-	//check database of usernames
-
-	db, err := bolt.Open("userDetails.db", 0644, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	cnt := 0
-	flag := 0
-	defer db.Close()
-	err = db.View(func(tx *bolt.Tx) error {
-		bucket := tx.Bucket(world)
-		if bucket == nil {
-			return fmt.Errorf("Bucket %q not found!", world)
-		}
-		c := bucket.Cursor()
-		//names := []byte(name)
-		for keyy, valuu := c.First(); keyy != nil; keyy, valuu = c.Next() {
-			// retrieve the data
-			cnt = cnt + 1
-			if name == string(keyy) && pass == string(valuu) {
-				fmt.Println("username & pwd exists")
-				flag = 1
-				return nil
-			}
-
-		}
-		return nil
-	})
-	//fmt.Printf("%s does not exist out of %d usernames\n", name, cnt)
-	return flag
-
-}
-
 // logout handler
 
 func LogoutHandler(response http.ResponseWriter, request *http.Request) {
-	ClearSession(response)
+	sessions.ClearSession(response)
 	http.Redirect(response, request, "/", 302)
 }
 
@@ -83,17 +90,19 @@ func IndexPageHandler1(response http.ResponseWriter, request *http.Request) {
 // internal page
 
 func InternalPageHandler(response http.ResponseWriter, request *http.Request) {
-	userName := GetUserName(request)
-	if userName != "" {
-		fmt.Fprintf(response, "%s %s %s", frontend.InternalPage, "Login Successful", userName)
+	username, err := sessions.IsValidSession(request)
+	log.Println("at InternalPageHandler1", username, err)
+	if err == nil {
+		fmt.Fprintf(response, "%s", frontend.InternalPage)
 	} else {
 		http.Redirect(response, request, "/", http.StatusFound)
 	}
 }
 func InternalPageHandler1(response http.ResponseWriter, request *http.Request) {
-	userName := GetUserName(request)
-	if userName != "" {
-		fmt.Fprintf(response, "%s %s %s", frontend.InternalPage, "Successfully Registered", userName)
+	username, err := sessions.IsValidSession(request)
+	log.Println("at InternalPageHandler1", username, err)
+	if err == nil {
+		fmt.Fprintf(response, "%s", frontend.InternalPage)
 	} else {
 		http.Redirect(response, request, "/", http.StatusFound)
 	}

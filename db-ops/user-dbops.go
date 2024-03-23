@@ -83,7 +83,7 @@ func (r *UserRepository) GetSession(userID string) (string, error) {
 
 func (r *UserRepository) UpdateSession(userID string, session string) error {
 	fmt.Println("userID: ", userID, " session: ", session)
-	return r.C.Update(bson.M{"_id": bson.ObjectId(userID)}, bson.M{"$set": bson.M{"session": session}})
+	return r.C.Update(bson.M{"_id": bson.ObjectIdHex(userID)}, bson.M{"$set": bson.M{"session": session}})
 }
 
 func (r *UserRepository) GetUserName(userID string) (string, error) {

@@ -1,12 +1,12 @@
 package frontend
 
 const AppHtml = `
-<html >
-	<head>
-		 <title>Recipe Sharing Platform</title>
-		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<html>
+<head>
+<title> Recipe sharing platform</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 		<script type="text/javascript" src="/static/js/test5.js"></script>
-		<link href="/static/css/vendor/bootstrap.min.css" rel="stylesheet">
+		<link href="/static/css/vendor/bootstrap.min.css" rel="stylesheet" />
 		<style type="text/css">
 					.progress {
 					  height: 12px;
@@ -45,21 +45,31 @@ const AppHtml = `
 						margin-left : 0px ;
 						margin-right : 0px ;
 						height : 90px ;
+						font-size: 30px ;
 						background-color : black ;
 						opacity : 0.95;
 						text-align : left ;
 						}
 		</style>
 	</head>
+
+
 	<body>
+	<div class="toptag">
+						<h1 id="efi"><br>Recipe sharing platform</h1>
+			</div>
+
 		<div id="main">    
 			   <div id="content" >
 					<div class="content_item" align='middle'><br><br>
-						<h3>Hello <b>%s</b>, </h3><br><br>
-					  	<h1>Welcome To Recipe Sharing Platform/h1> <br><br>
-			      		<p>Browse for the image to upload :</p>	 <br> 
+					  	<h1>Welcome To Recipe Sharing Platform </h1> <br><br>
 				  					<form action="/upload/" method="POST"  enctype="multipart/form-data"  id="id-filedata" name="id-filedata">
-											
+										<label for="recipename" >Recipe name</label><br>
+						    			<input type="text" id="rname" name="rname" size="50"/> <br><br>
+										<label for="recipeprocedure" >Recipe procedure</label><br>
+									  <textarea rows="4" cols="50" name="idtextd" id="idtextd"></textarea>
+									  <br><br>
+									  <p>Browse for the image to upload :</p>	 <br> 
 											<input type="file" name="id-file-d" id="id-file-d" >
 											
 									</form>

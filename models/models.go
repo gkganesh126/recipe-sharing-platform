@@ -27,3 +27,19 @@ type (
 		Username string `json:"username"`
 	}
 )
+
+type (
+	Recipe struct {
+		RecipeID        bson.ObjectId `bson:"_id,omitempty" json:"recipeID"`
+		RecipeName      string        `json:"recipeName"`
+		RecipeDetail    string        `json:"recipeDetail"`
+		ImageName       string        `json:"imageName"`
+		CurrentUsername string        `json:"currentUsername"`
+		Comments        []Comment     `json:"comments"`
+	}
+	Comment struct {
+		User     string `json:"user"`
+		Comment  string `json:"comment"`
+		IsEdited bool   `json:"isEdited"`
+	}
+)

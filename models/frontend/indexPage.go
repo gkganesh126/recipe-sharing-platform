@@ -4,6 +4,25 @@ const IndexPage = `
 <html >
 	<head>
 	<title>Recipe Sharing Platform</title>
+	<script>
+		function pwdcheck() {
+			var pwd = document.getElementsByTagName("input");
+			var form=document.getElementsByTagName("form");
+			if((pwd[0].value == pwd[1].value) || (pwd[0].value==pwd[2].value)) {
+					alert('Username and password should not be same');
+					form.setAttribute("action","/register/");
+			} else if(pwd[1].value.length<6 || pwd[2].value.length<6) {
+					alert('password length should not be less than 6');
+					form.setAttribute("action","/register/");
+			}else if(pwd[1].value != pwd[2].value) {
+					alert('Passwords are not same');
+					form.setAttribute("action","/register/");
+			}else {
+					alert('Valid Password');
+					form.setAttribute("action","/newlogin/");
+			}
+		}
+		</script>
 		<style>
 		body {
 			margin:0px ;
@@ -37,14 +56,13 @@ const IndexPage = `
 				    <h1>Welcome To Recipe sharing platform</h1> 
 						<br><br>
 					
-						<form method="post" action="/login">
+						<form method="post" action="/internal">
 						    <label for="name">User name</label>
 						    <input type="text" id="name" name="name">
 						    <label for="password">Password</label>
 						    <input type="password" id="password" name="password">
 						    <button type="submit">Login</button>
 						</form><br>
-					<a href="/register/">New User? Register here</a>
 				</div>
 			</div>
 		<style>

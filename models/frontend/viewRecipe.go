@@ -1,7 +1,6 @@
 package frontend
 
-const Templ = `
-<!DOCTYPE html>
+const ViewRecipe = `
 <html>
     <head>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>

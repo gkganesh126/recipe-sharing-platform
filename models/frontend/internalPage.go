@@ -31,8 +31,8 @@ const InternalPage = `
 	<br>
 			<div class="mid">
 				<p>What would you like to do?</p><br>
-				<a href="/app/">Upload a Picture</a><br><br>
-				<a href="/viewimage/">View Pictures</a><br><br>
+				<a href="/app/">Upload a Recipe</a><br><br>
+				<a href="/view/">View Recipes</a><br><br>
 					<form method="post" action="/logout">
 					    <button type="submit">Logout</button>
 					</form>

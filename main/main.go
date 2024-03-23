@@ -6,16 +6,12 @@ import (
 	"github.com/gkganesh126/recipe-sharing-platform/common"
 	"github.com/gkganesh126/recipe-sharing-platform/logger"
 	"github.com/gkganesh126/recipe-sharing-platform/routers"
-	"github.com/gkganesh126/recipe-sharing-platform/sessions"
 	"go.uber.org/zap"
 
 	"github.com/gorilla/mux"
 )
 
 func main() {
-
-	sessions.InitCookieHandler()
-
 	loggerMgr := logger.InitLogger()
 	zap.ReplaceGlobals(loggerMgr)
 	loggerMgr.Sync()
@@ -35,8 +31,6 @@ func main() {
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/",
 		http.FileServer(http.Dir("./static"))))
 	http.Handle("/", router)
-
-	sessions.InitCookieHandler()
 
 	zap.S().Info("Listening at " + server.Addr)
 	server.ListenAndServe()

@@ -2,40 +2,34 @@ package routers
 
 import (
 	"fmt"
-
-	"github.com/gkganesh126/recipe-sharing-platform/controllers"
-
-	//"log"
 	"net/http"
 
+	"github.com/gkganesh126/recipe-sharing-platform/controllers"
 	"github.com/gkganesh126/recipe-sharing-platform/models/frontend"
+
+	//"log"
 
 	"github.com/gorilla/mux"
 )
 
 func SetRecipeSharingRouters(router *mux.Router) *mux.Router {
-	router.HandleFunc("/", controllers.IndexPageHandler)
-	router.HandleFunc("/errorlogin", controllers.IndexPageHandler1)
-	router.HandleFunc("/internal", controllers.InternalPageHandler)
-	router.HandleFunc("/internalnew", controllers.InternalPageHandler1)
-	router.HandleFunc("/register/", func(response http.ResponseWriter, request *http.Request) {
-		fmt.Fprintf(response, "%s", frontend.RegisterPage)
+	router.HandleFunc("/", func(response http.ResponseWriter, request *http.Request) {
+		fmt.Fprintf(response, "%s", frontend.IndexPage)
 	})
-	router.HandleFunc("/newlogin", controllers.RegisterInDb)
-	router.HandleFunc("/login", controllers.LoginHandler)
+	router.HandleFunc("/internal", func(response http.ResponseWriter, request *http.Request) {
+		fmt.Fprintf(response, "%s", frontend.InternalPage)
+	})
 	router.HandleFunc("/logout", controllers.LogoutHandler)
 
-	/*router.HandleFunc("/upload/", controllers.HelloServer)
-
-	router.HandleFunc("/app/", controllers.Uploadimage)
-
-	router.HandleFunc("/images/", controllers.HandleImages)
-	//r.HandleFunc("/images/{ImageName}/", HandleImage)
-
-	router.HandleFunc("/viewimage/", controllers.Viewimage)
-	router.HandleFunc("/writecmnttodb/", controllers.WriteCmntToDb)
-	router.HandleFunc("/readcmntfromdb/", controllers.ReadCmntFromDb)
-	*/
+	router.HandleFunc("/app/", func(response http.ResponseWriter, request *http.Request) {
+		fmt.Fprintf(response, "%s", frontend.AppHtml)
+	})
+	router.HandleFunc("/upload/", controllers.UploadRecipe)
+	router.HandleFunc("/view/", func(response http.ResponseWriter, request *http.Request) {
+		fmt.Fprintf(response, "%s", frontend.ViewRecipe)
+	})
+	router.HandleFunc("/write-comment/", controllers.WriteCmntToDb)
+	router.HandleFunc("/read-comment/", controllers.ReadCmntFromDb)
 
 	return router
 }

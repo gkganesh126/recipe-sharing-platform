@@ -37,5 +37,5 @@ func (r *RecipeRepository) GetRecipeFromImageName(imageName string) (models.Reci
 }
 func (r *RecipeRepository) UpdateComments(imageName string, Comment models.Comment) error {
 	fmt.Println("imageName: ", imageName, " Comment: ", Comment)
-	return r.C.Update(bson.M{"imagename": imageName}, bson.M{"$set": bson.M{"comments": Comment}})
+	return r.C.Update(bson.M{"imagename": imageName}, bson.M{"$addToSet": bson.M{"comments": Comment}})
 }

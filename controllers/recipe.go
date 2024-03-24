@@ -137,8 +137,8 @@ func ReadCmntFromDb(response http.ResponseWriter, request *http.Request) {
 
 	data := "<h3>" + recipes.RecipeName + "</h3>" + "<br>" + recipes.RecipeDetail + "<br>"
 	for _, comment := range recipes.Comments {
-		data += comment.User + "<br>"
-		data += comment.Comment + "<br>"
+		data += "<h3>" + comment.User + "</h3><br>"
+		data += comment.Comment + "<br> <hr>"
 	}
 	fmt.Println(data)
 	fmt.Fprintf(response, data)

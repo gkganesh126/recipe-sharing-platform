@@ -28,8 +28,8 @@ func SetRecipeSharingRouters(router *mux.Router) *mux.Router {
 	router.HandleFunc("/view/", func(response http.ResponseWriter, request *http.Request) {
 		controllers.ViewRecipe(response, request)
 	})
-	router.HandleFunc("/write-comment/", controllers.WriteCmntToDb)
-	router.HandleFunc("/read-comment/", controllers.ViewRecipe)
+	router.HandleFunc("/writecmnttodb/", controllers.WriteCmntToDb)
+	router.HandleFunc("/readcmntfromdb/", controllers.ReadCmntFromDb)
 
 	return router
 }

@@ -41,9 +41,10 @@ const ViewRecipe = `
 		<div class="galleriaContainer">
 	        <div class="galleria">
 			{{range .ImageName}}
-			<a href="/static/server/pictures/{{.}}" download="{{.}}"><img src="/static/server/pictures/{{.}}" /></a>
-	         {{end}}   
-	            
+			<a href="/static/server/pictures/{{ . }}" download="{{ . }}"><img src="/static/server/pictures/{{ . }}" /></a>
+	       
+			{{end}}   
+
 	        </div>
 		</div>
 		
@@ -110,6 +111,9 @@ const ViewRecipe = `
 			</div>
 
 			<form action="/writecmnttodb/" method="POST" enctype="multipart/form-data"  id="id-commentdata" name="id-commentdata">
+
+			
+
 				<input type="hidden" id="tesla" name="tesla" />	
 									
 				<div class="commentbox" onload="this.style.height='28px'" >

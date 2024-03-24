@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -80,7 +81,7 @@ func ViewRecipe(response http.ResponseWriter, request *http.Request) {
 	repo := &db.RecipeRepository{C: c}
 
 	vs := repo.GetAll()
-	zap.S().Info("vs: ", vs)
+	//zap.S().Info("vs: ", vs)
 	for i, v := range vs {
 		imagee.RecipeID = append(imagee.RecipeID, v.RecipeID)
 		imagee.RecipeName = append(imagee.RecipeName, v.RecipeName)
@@ -100,8 +101,45 @@ func ViewRecipe(response http.ResponseWriter, request *http.Request) {
 
 func WriteCmntToDb(response http.ResponseWriter, request *http.Request) {
 	zap.S().Info("At WriteCmntToDb")
+
+	currentImage := request.FormValue("tesla")
+	currentComment := request.FormValue("currentComment")
+
+	context := NewContext()
+	defer context.Close()
+	c := context.RecipeSharingPlatformDbCollection("recipes")
+	// Create User
+	repo := &db.RecipeRepository{C: c}
+
+	comment := models.Comment{User: "User", Comment: currentComment}
+	err := repo.UpdateComments(currentImage, comment)
+	if err != nil {
+		common.DisplayAppError(response, "User", err, "WriteCmntToDb failed", http.StatusInternalServerError)
+		return
+	}
 }
 
 func ReadCmntFromDb(response http.ResponseWriter, request *http.Request) {
 	zap.S().Info("At ReadCmntFromDb")
+	currentImage := request.FormValue("tesla")
+
+	context := NewContext()
+	defer context.Close()
+	c := context.RecipeSharingPlatformDbCollection("recipes")
+	// Create User
+	repo := &db.RecipeRepository{C: c}
+	recipes, err := repo.GetRecipeFromImageName(currentImage)
+	if err != nil {
+		common.DisplayAppError(response, "User", err, "ReadCmntFromDb failed", http.StatusInternalServerError)
+		return
+	}
+	fmt.Println("recipes: ", recipes)
+
+	data := "<h3>" + recipes.RecipeName + "</h3>" + "<br>" + recipes.RecipeDetail + "<br>"
+	for _, comment := range recipes.Comments {
+		data += comment.User + "<br>"
+		data += comment.Comment + "<br>"
+	}
+	fmt.Println(data)
+	fmt.Fprintf(response, data)
 }
